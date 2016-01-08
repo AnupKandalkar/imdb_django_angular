@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+	<head>		
+		<title>Movies System</title>
+		{% block script %}
+		{% endblock %}
+		{% block style %}
+		{% endblock %}	
+	</head>
+	<body>
+		<div class="container" ng-app="moviesApp">		 
+
+		    <div class="content" style="width:100%;margin:10px auto">
+		    	{% block content %}
+		    	{% endblock %}
+		    </div>
+
+			<div class="footer">
+				{% block footer %}
+				{% endblock %}
+			</div>
+		</div>
+	</body>
+</html>

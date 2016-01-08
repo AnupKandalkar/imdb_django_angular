@@ -1,0 +1,62 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{title}}</h3>
+  </div>
+  <div class="panel-body">
+
+  	<table class="table table-hover">
+        <thead>
+          <tr>
+            <td><a ui-sref="newMovie">Add Movie</a></td>
+            <td><a ng-click="logout()" class="btn btn-primary">Logout</a></td>
+          </tr>
+        </thead>      
+        <tbody>
+          <tr ng-repeat="movie in moviesList | orderBy:'-id'">
+             <td rowspan="" valign="top" id="img_primary">
+                  <div class="image">
+             </td>
+             <td class="overview-top">
+                <h4><a href="" ng-click="getMovieData(movie.id)">{{ movie.name }}</a></h4>
+                <div class="outline" itemprop="description">
+                  {{ movie.description }}           
+                </div> 
+                <div class="txt-block">
+                    <h5 class="inline">Director:</h5>
+                    <span itemprop="director" itemscope="" itemtype="http://schema.org/Person">
+                        <span itemprop="name">
+                            <!-- <a href="/name/nm4941030/?ref_=inth_ov_nm" itemprop="url">{{ movie.director }}</a>  -->  
+                            <a> {{ movie.director }} </a>
+                        </span>
+                    </span>                            
+                </div> 
+                <div class="txt-block">
+                    <h5 class="inline">Stars:</h5>
+                    <span itemprop="actors" itemscope="" itemtype="http://schema.org/Person">
+                        <span itemprop="name">
+                          <a> {{ movie.stars }}</a>
+                          <!-- <a href="/name/nm1754059/?ref_=inth_ov_nm" itemprop="url">Natalie Dormer</a> -->
+                    </span></span>
+                </div>
+                <div class="txt-block">
+                    <h5 class="inline">Genre:</h5>
+                    <span itemprop="genres" itemscope="" itemtype="http://schema.org/Person" ng-repeat="mgenre in movie.genre">
+                        <span itemprop="name">
+                          <a>{{ genreList[mgenre].genre }} {{$last ? '' : ','}}</a>
+                          <!-- <a href="/name/nm1754059/?ref_=inth_ov_nm" itemprop="url">Natalie Dormer</a> -->
+                        </span>
+                    </span>
+                </div>
+              </td>
+              <td>
+                <div class="txt-block">
+                    <a href="" ng-click="removeMovie(movie)">Delete</a>
+                </div>                    
+              </td>
+
+          </tr>
+        </tbody>    
+    </table>
+  </div>
+</div>
+               
