@@ -1,23 +1,83 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">{{title}}</h3>
+    <h3 class="panel-title">{{title}} </h3>
   </div>
-  <div class="panel-body">
+  <div class="panel-body">  
+    <div ng-show="movies.name" class="ng-hide">
+      <form role="form" name="frmUpdateMovie" novalidate ng-submit="updateMovie()">
+        <div class="col-lg-6">      
+          <div class="form-group">
+            <label for="name">Name:</label>   
+            <input type="text" ng-model="movies.name" class="form-control input-normal" required>     
+          </div>
+          <div class="form-group">
+            <label for="director">Director:</label>   
+            <input type="text" ng-model="movies.director" class="form-control input-normal" required>     
+          </div>
+          <div class="form-group">
+            <label for="stars">Stars:</label>   
+            <textarea type="text" ng-model="movies.stars" placeholder="Stars with separated by comma" class="form-control input-normal" required/>      
+          </div>
+         
+      </div>
+      <div class="col-lg-6">  
+          <div class="form-group">
+            <label for="ssdb_score">SSDB Score:</label>   
+            <input type="number" ng-model="movies.ssdb_score" class="form-control input-normal">      
+          </div>
+          <div class="form-group">
+            <label for="popularity">Popularity:</label>   
+            <input type="number" ng-model="movies.popularity" class="form-control input-normal">      
+          </div>
+          <div class="form-group">
+            <label for="discription">Discription:</label>   
+            <textarea type="text" ng-model="movies.description" class="form-control input-normal" required/>      
+          </div>  
+          <div class="form-group">
+            <label for="genre">Genre:</label>
+            <select class="multiselect form-control" data-placeholder="Select Genre" 
+                    ng-model="genreSelections" ng-options="genre.id as genre.genre for genre in genreListDatas"
+                    multiple="multiple" multiselect-dropdown required> 
+                </select>
+              
+                </div>              
+          <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-success pull-right" ng-disabled="!frmUpdateMovie.$valid">
+            </div>
+        </div>        
+      </form>
+    </div>
 
+
+    <!-- <input ng-model="userType" type="text"/> -->
   	<table class="table table-hover">
-        <thead>
-          <tr>
-            <td><a ui-sref="newMovie">Add Movie</a></td>
-            <td><a ng-click="logout()" class="btn btn-primary">Logout</a></td>
-          </tr>
+        <thead>         
+          <tr ng-show="{{userType}}">
+            <td></td>
+            <td></td>
+            <td>
+          <p class="text-right">        
+            <a ui-sref="newMovie" class="btn btn-default btn-xs">Add Movie</a>
+            <a ng-click="generList()" class="btn btn-default btn-xs">Gener List</a>
+            </p>              
+            </td>            
+          </tr>          
         </thead>      
         <tbody>
-          <tr ng-repeat="movie in moviesList | orderBy:'-id'">
+          <tr>
+            <td></td>
+            <td>
+            <p class="text-center">
+            <input type=text ng-model='query' placeholder="Search here..."></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr ng-repeat="movie in moviesList | filter:query| orderBy:'-id'">
              <td rowspan="" valign="top" id="img_primary">
                   <div class="image">
              </td>
              <td class="overview-top">
-                <h4><a href="" ng-click="getMovieData(movie.id)">{{ movie.name }}</a></h4>
+                <h4><a href="" ng-click="getMovieData(movie)">{{ movie.name }}</a></h4>
                 <div class="outline" itemprop="description">
                   {{ movie.description }}           
                 </div> 
@@ -40,16 +100,18 @@
                 </div>
                 <div class="txt-block">
                     <h5 class="inline">Genre:</h5>
-                    <span itemprop="genres" itemscope="" itemtype="http://schema.org/Person" ng-repeat="mgenre in movie.genre">
+                    <span itemprop="genre" itemscope="" itemtype="http://schema.org/Person" ng-repeat="mgenre in movie.genre">
                         <span itemprop="name">
-                          <a>{{ genreList[mgenre].genre }} {{$last ? '' : ','}}</a>
-                          <!-- <a href="/name/nm1754059/?ref_=inth_ov_nm" itemprop="url">Natalie Dormer</a> -->
+                          <!-- <a>{{ getGenre(mgenre).genre }} -->
+                          <a>{{ genrefilter[mgenre] }} {{$last ? '': ','}}</a>                          
                         </span>
+
                     </span>
                 </div>
               </td>
-              <td>
-                <div class="txt-block">
+              <td ng-show="{{userType}}">
+                <div class="txt-block" ng-show="userType">
+                    <a href="" ng-click="showMovieData(movie)">Edit</a>
                     <a href="" ng-click="removeMovie(movie)">Delete</a>
                 </div>                    
               </td>

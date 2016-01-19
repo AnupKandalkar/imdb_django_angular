@@ -4,10 +4,22 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.views.decorators.csrf import csrf_exempt
 
 
 from movies.models import MoviesData, MoviesGenre
 from movies.serializers import MoviesDataSerializer, MoviesGenreSerializer
+
+
+# from rest_framework.authentication import SessionAuthentication 
+
+# class CsrfExemptSessionAuthentication(SessionAuthentication):
+
+#     def enforce_csrf(self, request):
+#         return  # To not perform the csrf check previously happening
+
+
+# authentication_classes = (CsrfExemptSessionAuthentication)
 
 class MoviesList(APIView):
     parser_classes = (MultiPartParser, FormParser,)
@@ -15,22 +27,27 @@ class MoviesList(APIView):
     List all movies, or create a new movies.
     """
     def get(self, request, format=None):
-        print "Moviessssss list"
+        print "movie get method"
         movies = MoviesData.objects.all()
         serializer = MoviesDataSerializer(movies, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        my_file = request.FILES['moviepic']
-        filename = '/tmp/myfile'
-        with open(filename, 'wb+') as temp_file:
-            for chunk in my_file.chunks():
-                temp_file.write(chunk)
+        print "movie post method"
+        # my_file = request.FILES['moviepic']
+        # filename = '/tmp/myfile'
+        # with open(filename, 'wb+') as temp_file:
+        #     for chunk in my_file.chunks():
+        #         temp_file.write(chunk)
 
-        my_saved_file = open(filename) #there you go
+        # my_saved_file = open(filename) #there you go
 
 
-        print "Create movies",request.data
+        # print "Create movies",request.data
+        # gener_data = request.POST.getlist('genre[]')
+
+        # import pdb
+        # pdb.set_trace()
         serializer = MoviesDataSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -50,19 +67,25 @@ class MoviesDetail(APIView):
             raise Http404
 
     def get(self, request, pk, format=None):
+        print "movie update get method"
         movie = self.get_object(pk)
         serializer = MoviesDataSerializer(movie)
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):        
+    
+    def put(self, request, pk, format=None): 
+        print "Reques data",request.data
+        print "idddd",pk       
 
         movie = self.get_object(pk)
         serializer = MoviesDataSerializer(movie, data=request.data)
         if serializer.is_valid():
+            print "valid data"
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    
     def delete(self, request, pk, format=None):
         movie = self.get_object(pk)
         movie.delete()
@@ -81,6 +104,7 @@ class GenreList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
+        print "Genre creation"
         serializer = MoviesGenreSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

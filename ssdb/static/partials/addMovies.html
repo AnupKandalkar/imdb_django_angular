@@ -8,20 +8,20 @@
 	  		<div class="col-lg-6">	  	
 				  <div class="form-group">
 				    <label for="name">Name:</label>		
-				    <input type="text" ng-model="moviesdata.name" class="form-control input-normal">	    
+				    <input type="text" ng-model="moviesdata.name" class="form-control input-normal" required>	    
 				  </div>
 				  <div class="form-group">
 				    <label for="director">Director:</label>		
-				    <input type="text" ng-model="moviesdata.director" class="form-control input-normal">	    
+				    <input type="text" ng-model="moviesdata.director" class="form-control input-normal" required>	    
 				  </div>
 				  <div class="form-group">
 				    <label for="stars">Stars:</label>		
-				    <textarea type="text" ng-model="moviesdata.stars" placeholder="Stars with separated by comma" class="form-control input-normal"/>	    
+				    <textarea type="text" ng-model="moviesdata.stars" placeholder="Stars with separated by comma" class="form-control input-normal" required/>	    
 				  </div>
-				  <div class="form-group">
+				 <!--  <div class="form-group">
 				    <label for="image">Movie Pic:</label>		
 				    <img ng-model="moviesdata.moviepic" class="form-control input-normal"/>	    
-				  </div>				  
+				  </div>	 -->			  
 			</div>
 			<div class="col-lg-6">  
 				  <div class="form-group">
@@ -34,19 +34,19 @@
 				  </div>
 				  <div class="form-group">
 				    <label for="discription">Discription:</label>		
-				    <textarea type="text" ng-model="moviesdata.description" class="form-control input-normal"/>	    
+				    <textarea type="text" ng-model="moviesdata.description" class="form-control input-normal" required/>	    
 				  </div>	
 				  <div class="form-group">
 				    <label for="genre">Genre:</label>
 				    <select class="multiselect form-control" data-placeholder="Select Genre" 
-				            ng-model="genreSelection" ng-options="genre.id as genre.genre for genre in genreListData"
-				            multiple="multiple" multiselect-dropdown >
+				            ng-model="moviesdata.genreSelection" ng-options="genre.id as genre.genre for genre in genreListData"
+				            multiple="multiple" multiselect-dropdown required> 
             		</select>
-            		<button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+            		<!-- <button type="button" class="btn btn-default" ng-click="open()">Open me!</button> -->
             		<!-- <p>Selection: {{genreSelection}}</p> -->
             	  </div>				  		
 				  <div class="form-group">
-				  	<input type="submit" value="Submit" class="btn btn-default pull-right" ng-disabled="!frmNewMovie.$valid">
+				  	<input type="submit" value="Submit" class="btn btn-success pull-right" ng-disabled="!frmNewMovie.$valid">
 		  		  </div>
 	  		</div>	  		
 	  </form>

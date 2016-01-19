@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'angular/angular.js' %}"></script>
 	<script type="text/javascript" src="{% static 'angular-ui-router/release/angular-ui-router.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'angular-cookies/angular-cookies.min.js' %}"></script>
 	<script src="{% static 'moment/moment.js' %}"></script>
 	<!--<script src="{% static 'angular-moment/angular-moment.js' %}"></script>-->
 	<!--<script src="{% static 'bootstrap-daterangepicker/daterangepicker.js' %}"></script>-->
@@ -52,11 +53,27 @@
 {% endblock %}
 
 {% block content%}
-	    
-
+	<!-- <div>
+		<a ui-sref="dashboard" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-align-justify"></span> Home</a>			
+	</div> 
+	<div class="pull-right">
+		<a href="#" ng-click="logout()" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-log-out"></span> Logout</a>			
+	</div>    --> 	
 	<div id="myModal">
 	    <div>
 	        <div class="modal-content">
+	        	{% if request.user.is_authenticated %}
+	        	<div>
+	        		<span>
+					<a ui-sref="dashboard" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-home"></span> Dashboard</a>			
+					</span>
+					<span style="float: right">
+					<p>Welcome {{ request.user }} 
+					<!-- <a ng-click="logout()" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-log-out"></span> Logout</a> -->
+					<a href="{% url 'log_out' %}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-log-out"></span>Logout</a></p>
+					</span>
+				</div>
+				{% endif %}
 	            <div class="modal-header">
 	                <!-- <nav class="navbar navbar-default">
 					  <div class="container-fluid">					    

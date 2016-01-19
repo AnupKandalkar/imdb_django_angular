@@ -104,7 +104,8 @@ BOWER_INSTALLED_APPS = (
     'angular#1.3',
     'moment',
     # 'angular-route',
-    'angular-ui-router'
+    'angular-ui-router',
+    'angular-cookies',
 
     # 'angular-bootstrap#0.13.3',
 

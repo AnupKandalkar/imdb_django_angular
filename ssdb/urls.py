@@ -8,7 +8,9 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include('movies.urls')),
+    # url(r'^api/', include('authentication.urls')),
     url(r'^api/register/$', 'authentication.views.register'),
     url(r'^api/login/$', 'authentication.views.login'),
     url(r'^api/logout/$', 'authentication.views.logout'),
+    url(r'^logout/$', 'authentication.views.log_out', name="log_out"),
 ]
