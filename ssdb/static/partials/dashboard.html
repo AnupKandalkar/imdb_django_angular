@@ -73,9 +73,11 @@
             <td></td>
           </tr>
           <tr ng-repeat="movie in moviesList | filter:query| orderBy:'-id'">
-             <td rowspan="" valign="top" id="img_primary">
+             <!-- <td rowspan="" valign="top" id="img_primary">
                   <div class="image">
-             </td>
+             </td> -->
+             <td>
+              </td>
              <td class="overview-top">
                 <h4><a href="" ng-click="getMovieData(movie)">{{ movie.name }}</a></h4>
                 <div class="outline" itemprop="description">
@@ -95,6 +97,20 @@
                     <span itemprop="actors" itemscope="" itemtype="http://schema.org/Person">
                         <span itemprop="name">
                           <a> {{ movie.stars }}</a>
+                          <!-- <a href="/name/nm1754059/?ref_=inth_ov_nm" itemprop="url">Natalie Dormer</a> -->
+                    </span></span>
+                </div>
+                <div class="txt-block">
+                    <h5 class="inline">SSDB Score:</h5>
+                    <span itemprop="ssdb_score" itemscope="" itemtype="http://schema.org/Person">
+                        <span itemprop="name">
+                          <a> {{ movie.ssdb_score }}</a>
+                          <!-- <a href="/name/nm1754059/?ref_=inth_ov_nm" itemprop="url">Natalie Dormer</a> -->
+                    </span></span>
+                    <h5 class="inline">SSDB Popularity:</h5>
+                    <span itemprop="popularity" itemscope="" itemtype="http://schema.org/Person">
+                        <span itemprop="name">
+                          <a> {{ movie.popularity }}</a>
                           <!-- <a href="/name/nm1754059/?ref_=inth_ov_nm" itemprop="url">Natalie Dormer</a> -->
                     </span></span>
                 </div>

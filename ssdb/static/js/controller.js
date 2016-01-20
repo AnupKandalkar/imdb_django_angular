@@ -89,15 +89,14 @@ moviesApp.controller("newMovieCtrl", function($scope, $location, moviesFactory, 
 
 	$scope.saveMovie = function(){
 
-		// console.log("$scope.genreSelection",$scope.genreSelection);
 		$scope.moviesdata.name = $scope.moviesdata.name;
 		$scope.moviesdata.director = $scope.moviesdata.director;
 		$scope.moviesdata.stars = $scope.moviesdata.stars;
 		$scope.moviesdata.ssdb_score = $scope.moviesdata.ssdb_score;
 		$scope.moviesdata.popularity = $scope.moviesdata.popularity;
 		$scope.moviesdata.description = $scope.moviesdata.description;
-		$scope.moviesdata.genre = $scope.moviesdata.genreSelection;
-		
+		$scope.moviesdata.genre = $scope.genreSelection;
+		console.log("after",$scope.moviesdata);
 		moviesFactory.creaeMovie($scope.moviesdata).then(function(response){
 					
 			// $location.path('/dashboard');

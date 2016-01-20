@@ -28,7 +28,7 @@ class MoviesData(models.Model):
 	popularity = models.IntegerField(default=0)
 	genre = models.ManyToManyField(MoviesGenre, related_name="moviegenre")
 	create_date = models.DateField(null=True, blank=True)
-	moviepic = models.ImageField(upload_to="%Y/%m/%d", null=True, blank=True)
+	# moviepic = models.ImageField(upload_to="%Y/%m/%d", null=True, blank=True)
 	# genre = models.CharField(choices=movies_genre, null=True, blank=True)
 
 

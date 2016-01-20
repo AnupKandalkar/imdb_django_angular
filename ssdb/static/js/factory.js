@@ -31,7 +31,6 @@ moviesApp.factory('moviesFactory', function($http, $cookies){
 
 	_moviesService.creaeMovie = function(moviesdata){		
 		console.log("create move", moviesdata);
-		console.log("DAtaa",$.param(moviesdata));
 		return $http.post(urlBase, $.param(moviesdata), {headers: header_val});
 	}
 

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.views.decorators.csrf import csrf_exempt
-
+from django.forms import model_to_dict
 
 from movies.models import MoviesData, MoviesGenre
 from movies.serializers import MoviesDataSerializer, MoviesGenreSerializer
@@ -34,21 +34,26 @@ class MoviesList(APIView):
 
     def post(self, request, format=None):
         print "movie post method"
-        # my_file = request.FILES['moviepic']
-        # filename = '/tmp/myfile'
-        # with open(filename, 'wb+') as temp_file:
-        #     for chunk in my_file.chunks():
-        #         temp_file.write(chunk)
+       
+        movie_data = MoviesData()
+        movie_data.name = request.POST.get('name')
+        movie_data.ssdb_score = int(request.POST.get('ssdb_score'))
+        movie_data.popularity = int(request.POST.get('popularity'))
+        movie_data.director = request.POST.get('director')
+        movie_data.description = request.POST.get('description')
+        movie_data.stars = request.POST.get('stars')
+        movie_data.save()
 
-        # my_saved_file = open(filename) #there you go
 
-
-        # print "Create movies",request.data
-        # gener_data = request.POST.getlist('genre[]')
-
+        for genre_id in request.POST.getlist('genre[]'):
+            movie_data.genre.add(int(genre_id))    
+       
+        dict_data = model_to_dict(movie_data)
+        print "previous data",request.data
+        print "dict data",dict_data
         # import pdb
         # pdb.set_trace()
-        serializer = MoviesDataSerializer(data=request.data)
+        serializer = MoviesDataSerializer(data=dict_data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -73,14 +78,26 @@ class MoviesDetail(APIView):
         return Response(serializer.data)
 
     
-    def put(self, request, pk, format=None): 
-        print "Reques data",request.data
-        print "idddd",pk       
-
+    def put(self, request, pk, format=None):         
         movie = self.get_object(pk)
-        serializer = MoviesDataSerializer(movie, data=request.data)
-        if serializer.is_valid():
-            print "valid data"
+        genre_list = []
+        movie_data = {}
+        data = request.data
+        movie_data = dict(data.iterlists())       
+        genre_list = [int(genre_id) for genre_id in movie_data.get('genre[]')]
+                
+        movie_data['genre'] = genre_list
+        movie_data['name'] = request.data['name']
+        movie_data['director'] = request.data['director']
+        movie_data['description'] = request.data['description']
+        movie_data['stars'] = request.data['stars']
+        movie_data['ssdb_score'] = int(request.data['ssdb_score'])
+        movie_data['popularity'] = int(request.data['popularity'])
+
+        movie_data['create_date'] = None
+        
+        serializer = MoviesDataSerializer(movie, data=movie_data)        
+        if serializer.is_valid():            
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
